@@ -6,7 +6,7 @@ build/
 !**/src/test/**/build/
 
 # application.yml commit할 때 ignore
-application.yml
+/src/main/resources/application.yml
 
 ### STS ###
 .apt_generated
