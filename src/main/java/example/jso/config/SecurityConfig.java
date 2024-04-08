@@ -22,6 +22,7 @@ public class SecurityConfig {
 
     private final String[] swaggerUri = {"/", "/swagger-ui/**", "/v3/**", "/signUp"};
 
+    // TODO 403 해결...
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
