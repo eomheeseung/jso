@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+    url:  jdbc:h2:tcp://localhost/~/jso
+  jpa:
+    hibernate:
+      ddl-auto: create
+#      ??? ??? ??? oauth.yml? ????? ???
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 89571594832-8bm0rh89q193q0jkop98meh8fg2l69o0.apps.googleusercontent.com
+            client-secret: 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
+            scope:
+              - email
+              - profile
+            redirect-uri: http://localhost:8080/login/oauth2/code/google
+            provider: google
