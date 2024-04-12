@@ -1,0 +1,10 @@
+jwt:
+  secretKey : NiOeyFbN1Gqo10bPgUyTFsRMkJpGLXSvGP04eFqj5B30r5TcrtlSXfQ7TndvYjNvfkEKLqILn0j1SmKODO1Yw3JpBBgI3nVPEahqxeY8qbPSFGyzyEVxnl4AQcrnVneI
+
+  access:
+    expiration: 360000
+    header: Authorization
+
+  refresh:
+    expiration : 1209600000
+    header: Authorization-refresh
