@@ -1,4 +1,4 @@
-package example.jso.exception;
+package example.jso.core.exception;
 
 public class NotFoundDataException extends RuntimeException {
     public NotFoundDataException(String message) {
