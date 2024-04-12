@@ -1,4 +1,4 @@
-package example.jso.config;
+package example.jso.core.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

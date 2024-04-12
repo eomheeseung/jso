@@ -1,4 +1,4 @@
-package example.jso.config;
+package example.jso.core.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.annotations.OpenAPI30;

@@ -1,11 +1,11 @@
 package example.jso.model.service;
 
 import example.jso.config.token.TokenProvider;
-import example.jso.domain.Users;
-import example.jso.domain.dto.LoginRequestDto;
-import example.jso.domain.dto.LoginResponseDto;
-import example.jso.domain.dto.SignInRequestDto;
-import example.jso.domain.roles.UserRoles;
+import example.jso.domain.user.User;
+import example.jso.domain.user.dto.LoginRequestDto;
+import example.jso.domain.user.dto.LoginResponseDto;
+import example.jso.domain.user.dto.SignInRequestDto;
+import example.jso.domain.user.Role;
 import example.jso.exception.NotFoundDataException;
 import example.jso.model.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,30 +28,30 @@ public class LoginService {
         String name = dto.getName();
         String password = dto.getPassword();
 
-        UserRoles userRoles;
+        Role role;
 
         if (name.equals("admin")) {
-            userRoles = UserRoles.ADMIN;
+            role = Role.ADMIN;
         } else {
-            userRoles = UserRoles.USER;
+            role = Role.USER;
         }
 
         try {
             String encodePassword = passwordEncoder.encode(password);
 
-            Optional<Users> optionalUsers = repository.findByEmail(email);
+            Optional<User> optionalUsers = repository.findByEmail(email);
 
 
             if (optionalUsers.isEmpty()) {
-                repository.save(Users.builder()
+                repository.save(User.builder()
                         .email(email)
                         .password(encodePassword)
                         .name(name)
-                        .roles(userRoles)
+                        .roles(role)
                         .build());
             } else {
-                Users users = optionalUsers.get();
-                repository.save(users.update(email, name, encodePassword, userRoles));
+                User user = optionalUsers.get();
+                repository.save(user.update(email, name, encodePassword, role));
             }
         } catch (RuntimeException e) {
             return false;
@@ -64,14 +64,14 @@ public class LoginService {
         String email = dto.getEmail();
         String password = dto.getPassword();
 
-        Optional<Users> optionalUsers = repository.findByEmail(email);
+        Optional<User> optionalUsers = repository.findByEmail(email);
 
         if (optionalUsers.isEmpty()) {
             throw new NotFoundDataException("no data");
         } else {
-            Users users = optionalUsers.get();
+            User user = optionalUsers.get();
 
-            boolean isMatch = passwordEncoder.matches(password, users.getPassword());
+            boolean isMatch = passwordEncoder.matches(password, user.getPassword());
 
             if (!isMatch) {
                 throw new NotFoundDataException("no password matches");
@@ -80,8 +80,8 @@ public class LoginService {
             String token = tokenProvider.createToken(email);
 
             LoginResponseDto loginResponseDto = new LoginResponseDto();
-            loginResponseDto.setEmail(users.getEmail());
-            loginResponseDto.setRoles(users.getRoles().name());
+            loginResponseDto.setEmail(user.getEmail());
+            loginResponseDto.setRoles(user.getRoles().name());
             loginResponseDto.setToken(token);
 
             return loginResponseDto;

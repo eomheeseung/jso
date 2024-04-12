@@ -1,8 +1,8 @@
 package example.jso.model.controller;
 
-import example.jso.domain.dto.LoginRequestDto;
-import example.jso.domain.dto.LoginResponseDto;
-import example.jso.domain.dto.SignInRequestDto;
+import example.jso.domain.user.dto.LoginRequestDto;
+import example.jso.domain.user.dto.LoginResponseDto;
+import example.jso.domain.user.dto.SignInRequestDto;
 import example.jso.model.service.LoginService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
