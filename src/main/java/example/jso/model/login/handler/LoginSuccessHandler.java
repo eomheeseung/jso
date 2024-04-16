@@ -7,16 +7,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
 @Slf4j
 @RequiredArgsConstructor
-@PropertySource("classpath:application-jwt.yml")
 public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
-
     private final JwtService jwtService;
     private final UserRepository userRepository;
 

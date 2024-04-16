@@ -4,7 +4,6 @@ import example.jso.core.jwt.JwtService;
 import example.jso.domain.user.Role;
 import example.jso.domain.user.respository.UserRepository;
 import example.jso.oauth2.CustomOAuth2User;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +24,7 @@ public class Oauth2LoginSuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
                                         HttpServletResponse response,
-                                        Authentication authentication) throws IOException, ServletException {
+                                        Authentication authentication) throws IOException {
         log.info("oauth2 로그인 성공");
 
         try {

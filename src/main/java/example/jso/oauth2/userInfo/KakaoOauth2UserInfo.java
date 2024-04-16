@@ -15,13 +15,9 @@ public class KakaoOauth2UserInfo extends Oauth2UserInfo {
     @Override
     public String getNickName() {
         Map<String, Object> account = (Map<String, Object>) attributes.get("kakao_account");
-
-        if (account == null) {
-            return null;
-        }
         Map<String, Object> profile = (Map<String, Object>) attributes.get("profile");
 
-        if (profile == null) {
+        if (account == null || profile == null) {
             return null;
         }
 
@@ -31,13 +27,9 @@ public class KakaoOauth2UserInfo extends Oauth2UserInfo {
     @Override
     public String getImageUrl() {
         Map<String, Object> account = (Map<String, Object>) attributes.get("kakao_account");
-
-        if (account == null) {
-            return null;
-        }
         Map<String, Object> profile = (Map<String, Object>) attributes.get("profile");
 
-        if (profile == null) {
+        if (account == null || profile == null) {
             return null;
         }
 

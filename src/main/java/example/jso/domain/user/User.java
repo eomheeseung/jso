@@ -44,7 +44,24 @@ public class User {
         this.password = passwordEncoder.encode(this.password);
     }
 
+    public void updateNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void updateAge(int age) {
+        this.age = age;
+    }
+
+    public void updateCity(String city) {
+        this.city = city;
+    }
+
+    public void updatePassword(String updatePassword, PasswordEncoder passwordEncoder) {
+        this.password = passwordEncoder.encode(updatePassword);
+    }
+
     public void updateRefreshToken(String updateRefreshToken) {
         this.refreshToken = updateRefreshToken;
     }
+
 }

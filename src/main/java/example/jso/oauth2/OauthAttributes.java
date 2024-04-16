@@ -1,4 +1,4 @@
-package example.jso.oauth2.dto;
+package example.jso.oauth2;
 
 import example.jso.domain.user.Role;
 import example.jso.domain.user.SocialType;
@@ -14,45 +14,47 @@ import java.util.Map;
 import java.util.UUID;
 
 @Getter
-public class OAuthAttributes {
+public class OauthAttributes {
     private String nameAttributeKey;
     private Oauth2UserInfo oauth2UserInfo;
 
     @Builder
-    public OAuthAttributes(String nameAttributeKey, Oauth2UserInfo oauth2UserInfo) {
+    public OauthAttributes(String nameAttributeKey, Oauth2UserInfo oauth2UserInfo) {
         this.nameAttributeKey = nameAttributeKey;
         this.oauth2UserInfo = oauth2UserInfo;
     }
 
-    public static OAuthAttributes of(SocialType socialType,
+    public static OauthAttributes of(SocialType socialType,
                                      String userNameAttributeName,
                                      Map<String, Object> attributes) {
-        if (socialType == socialType.NAVER) {
+        if (socialType == SocialType.NAVER) {
             return ofNaver(userNameAttributeName, attributes);
         }
-        if (socialType == socialType.KAKAO) {
+        if (socialType == SocialType.KAKAO) {
             return ofKakao(userNameAttributeName, attributes);
         }
         return ofGoogle(userNameAttributeName, attributes);
     }
 
-    private static OAuthAttributes ofKakao(String userNameAttributeName,
+    private static OauthAttributes ofKakao(String userNameAttributeName,
                                            Map<String, Object> attributes) {
-        return OAuthAttributes.builder()
+        return OauthAttributes.builder()
                 .nameAttributeKey(userNameAttributeName)
                 .oauth2UserInfo(new KakaoOauth2UserInfo(attributes))
                 .build();
-    }private static OAuthAttributes ofNaver(String userNameAttributeName,
+    }
+
+    private static OauthAttributes ofNaver(String userNameAttributeName,
                                            Map<String, Object> attributes) {
-        return OAuthAttributes.builder()
+        return OauthAttributes.builder()
                 .nameAttributeKey(userNameAttributeName)
                 .oauth2UserInfo(new NaverOauth2UserInfo(attributes))
                 .build();
     }
 
-    private static OAuthAttributes ofGoogle(String userNameAttributeName,
-                                           Map<String, Object> attributes) {
-        return OAuthAttributes.builder()
+    private static OauthAttributes ofGoogle(String userNameAttributeName,
+                                            Map<String, Object> attributes) {
+        return OauthAttributes.builder()
                 .nameAttributeKey(userNameAttributeName)
                 .oauth2UserInfo(new GoogleOauth2UserInfo(attributes))
                 .build();

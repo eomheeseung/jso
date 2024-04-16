@@ -4,7 +4,7 @@ import example.jso.domain.user.SocialType;
 import example.jso.domain.user.User;
 import example.jso.domain.user.respository.UserRepository;
 import example.jso.oauth2.CustomOAuth2User;
-import example.jso.oauth2.dto.OAuthAttributes;
+import example.jso.oauth2.OauthAttributes;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -37,6 +37,7 @@ public class CustomOauth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
         SocialType socialType = getSocialType(registrationId);
+
         String userNameAttributeName =
                 userRequest
                         .getClientRegistration()
@@ -46,13 +47,14 @@ public class CustomOauth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         Map<String, Object> attributes = oauth2User.getAttributes();
 
-        OAuthAttributes extractAttributes = OAuthAttributes.of(socialType, userNameAttributeName, attributes);
+        OauthAttributes extractAttributes = OauthAttributes.of(socialType, userNameAttributeName, attributes);
 
         User createUser = getUser(extractAttributes, socialType);
 
         return new CustomOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority(createUser.getRole().getKey())),
-                attributes, extractAttributes.getNameAttributeKey(),
+                attributes,
+                extractAttributes.getNameAttributeKey(),
                 createUser.getEmail(),
                 createUser.getRole()
         );
@@ -69,7 +71,7 @@ public class CustomOauth2UserService implements OAuth2UserService<OAuth2UserRequ
         return SocialType.GOOGLE;
     }
 
-    private User getUser(OAuthAttributes attributes, SocialType socialType) {
+    private User getUser(OauthAttributes attributes, SocialType socialType) {
         User findUser =
                 userRepository
                         .findBySocialTypeAndSocialId(socialType, attributes.getOauth2UserInfo().getId())
@@ -78,10 +80,11 @@ public class CustomOauth2UserService implements OAuth2UserService<OAuth2UserRequ
         if (findUser == null) {
             return saveUser(attributes, socialType);
         }
+
         return findUser;
     }
 
-    private User saveUser(OAuthAttributes attributes, SocialType socialType) {
+    private User saveUser(OauthAttributes attributes, SocialType socialType) {
         User createUser = attributes.toEntity(socialType, attributes.getOauth2UserInfo());
         return userRepository.save(createUser);
     }

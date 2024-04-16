@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -19,7 +18,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Getter
 @Slf4j
-@PropertySource("classpath:application-jwt.yml")
 public class JwtService {
 
     @Value("${jwt.secretKey}")
@@ -46,6 +44,7 @@ public class JwtService {
 
     public String createAccessToken(String email) {
         Date now = new Date();
+
         return JWT.create()
                 .withSubject(ACCESS_TOKEN_SUBJECT)
                 .withExpiresAt(new Date(now.getTime() + accessTokenExpirationPeriod))
@@ -55,6 +54,7 @@ public class JwtService {
 
     public String createRefreshToken() {
         Date now = new Date();
+
         return JWT.create()
                 .withSubject(REFRESH_TOKEN_SUBJECT)
                 .withExpiresAt(new Date(now.getTime() + refreshTokenExpirationPeriod))
